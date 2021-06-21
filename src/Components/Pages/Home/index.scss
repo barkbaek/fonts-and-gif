@@ -1,0 +1,22 @@
+@import '../../../Styles/index.scss';
+
+.home-root-container {
+  @extend .container-base;
+
+  .title-container {
+    margin-bottom: 50px;
+    span {
+      font-size: 40px;
+      font-weight: bold;
+    }
+  }
+
+  .move-example-container {
+    cursor: pointer;
+    margin: 10px 0;
+    span {
+      font-size: 24px;
+      font-weight: 400;
+    }
+  }
+}
