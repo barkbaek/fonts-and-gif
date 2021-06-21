@@ -464,6 +464,7 @@ class TextInput extends PIXI.Container{
                 case 'fontWeight':
                 case 'fontVariant':
                 case 'fontStyle':
+                    /* Customized */
                 case 'stroke':
                 case 'strokeThickness':
                     style[key] = this._input_style[key]
