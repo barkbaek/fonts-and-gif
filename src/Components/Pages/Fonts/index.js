@@ -50,8 +50,8 @@ function Editor(props) {
             src: url(/fonts/NotoSansCJKkr-Thin.ttf);
         }
     `
-    //document.head.appendChild(styleTag)
-    let textInput
+    document.head.appendChild(styleTag)
+    const textInput = useRef()
 
     useEffect(() => {
         const app = new PIXI.Application({
@@ -65,7 +65,7 @@ function Editor(props) {
 
         pixiContainer.current.appendChild(app.view)
 
-        textInput = new TextInput({
+        textInput.current = new TextInput({
             input: {
                 fontFamily: 'Arial',
                 fontSize: '50px',
@@ -79,9 +79,9 @@ function Editor(props) {
             //     disabled: {fill: 0xDBDBDB, rounded: 16}
             // }
         })
-        textInput.setInputStyle("stroke", "#25556f")
-        textInput.setInputStyle("strokeThickness", 10)
-        app.stage.addChild(textInput)
+        textInput.current.setInputStyle("stroke", "#25556f")
+        textInput.current.setInputStyle("strokeThickness", 10)
+        app.stage.addChild(textInput.current)
 
     }, [])
 
@@ -95,18 +95,8 @@ function Editor(props) {
         setAnchorEl(null)
     }
 
-    const onClickMenuItem = (textInput, font) => {
-        // e.preventDefault()
-        console.log(`textInput: `)
-        console.dir(textInput)
-        textInput.setInputStyle("fontFamily", font)
-        handleClose()
-    }
-
-    const onClick1 = () => {
-        console.log('onClick1: ')
-        console.dir(textInput)
-        textInput.setInputStyle("fontFamily", FontNotoThin)
+    const onClickMenuItem = (font) => {
+        textInput.current.setInputStyle("fontFamily", font)
         handleClose()
     }
 
@@ -116,7 +106,6 @@ function Editor(props) {
             <Button aria-controls="dropdown-menu" aria-haspopup="true" onClick={handleClick}>
                 기본 폰트
             </Button>
-            <button onClick={onClick1}>to Thin</button>
             <Menu
                 style={{ marginTop: '40px' }}
                 id="dropdown-menu"
@@ -125,7 +114,13 @@ function Editor(props) {
                 open={Boolean(anchorEl)}
                 onClose={handleClose}
             >
-                <MenuItem onClick={onClick1}>to Thin</MenuItem>
+                <MenuItem className={FontNotoBlack} onClick={() => onClickMenuItem(FontNotoBlack)}>NotoSansCJKkr-Black</MenuItem>
+                <MenuItem className={FontNotoBold} onClick={() => onClickMenuItem(FontNotoBold)}>NotoSansCJKkr-Bold</MenuItem>
+                <MenuItem className={FontNotoDemiLight} onClick={() => onClickMenuItem(FontNotoDemiLight)}>NotoSansCJKkr-DemiLight</MenuItem>
+                <MenuItem className={FontNotoLight} onClick={() => onClickMenuItem(FontNotoLight)}>NotoSansCJKkr-Light</MenuItem>
+                <MenuItem className={FontNotoMedium} onClick={() => onClickMenuItem(FontNotoMedium)}>NotoSansCJKkr-Medium</MenuItem>
+                <MenuItem className={FontNotoRegular} onClick={() => onClickMenuItem(FontNotoRegular)}>NotoSansCJKkr-Regular</MenuItem>
+                <MenuItem className={FontNotoThin} onClick={() => onClickMenuItem(FontNotoThin)}>NotoSansCJKkr-Thin</MenuItem>
             </Menu>
             <div className="pixi-container" ref={pixiContainer}></div>
         </div>

@@ -1,3 +1,31 @@
+.MuiMenuItem-root.NotoSansCJKkr-Black {
+  font-family: NotoSansCJKkr-Black
+}
+
+.MuiMenuItem-root.NotoSansCJKkr-Bold {
+  font-family: NotoSansCJKkr-Bold
+}
+
+.MuiMenuItem-root.NotoSansCJKkr-DemiLight {
+  font-family: NotoSansCJKkr-DemiLight
+}
+
+.MuiMenuItem-root.NotoSansCJKkr-Light {
+  font-family: NotoSansCJKkr-Light
+}
+
+.MuiMenuItem-root.NotoSansCJKkr-Medium {
+  font-family: NotoSansCJKkr-Medium
+}
+
+.MuiMenuItem-root.NotoSansCJKkr-Regular {
+  font-family: NotoSansCJKkr-Regular
+}
+
+.MuiMenuItem-root.NotoSansCJKkr-Thin {
+  font-family: NotoSansCJKkr-Thin
+}
+
 .fonts-root-container {
   width: 1900px;
   height: 950px;
@@ -5,8 +33,4 @@
   flex-direction: column;
   align-items: flex-start;
   border: 1px solid rgba(0, 0, 0, 0.12);
-
-  .noto-black {
-    font-family: NotoSansCJKkr-Thin;
-  }
 }
