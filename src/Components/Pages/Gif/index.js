@@ -2,7 +2,6 @@ import { useHistory } from 'react-router-dom'
 import './index.scss'
 import {useEffect, useRef, useState} from "react";
 import * as PIXI from 'pixi.js'
-const styleTag = document.createElement('style')
 
 function Gif(props) {
     const pixiContainer = useRef()
