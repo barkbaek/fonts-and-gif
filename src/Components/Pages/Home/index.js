@@ -9,18 +9,14 @@ function Home(props) {
     }
 
     const list = [
-        // {
-        //     link: '/example',
-        //     label: 'Move to Example Page =>'
-        // },
         {
-            link: '/editor',
-            label: 'Move to Editor Page =>'
+            link: '/fonts',
+            label: 'Move to Fonts =>'
         },
-        // {
-        //     link: '/extractaudio',
-        //     label: 'Move to ExtractAudio Page =>'
-        // }
+        {
+            link: '/gif',
+            label: 'Move to Gif =>'
+        }
     ]
 
     return (

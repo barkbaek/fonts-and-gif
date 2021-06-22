@@ -1,5 +1,6 @@
 import Home from '../../Pages/Home'
-import Editor from '../../Pages/Editor'
+import Fonts from '../../Pages/Fonts'
+import Gif from '../../Pages/Gif'
 
 const routes = [
     {
@@ -16,9 +17,13 @@ const routes = [
     //     component: ExtractAudio
     // },
     {
-        path: "/editor",
-        component: Editor
-    }
+        path: "/fonts",
+        component: Fonts
+    },
+    {
+        path: "/gif",
+        component: Gif
+    },
 ]
 
 export default routes

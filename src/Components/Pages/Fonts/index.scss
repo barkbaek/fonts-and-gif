@@ -1,0 +1,12 @@
+.fonts-root-container {
+  width: 1900px;
+  height: 950px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+
+  .noto-black {
+    font-family: NotoSansCJKkr-Thin;
+  }
+}

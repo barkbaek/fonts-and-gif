@@ -111,7 +111,7 @@ function Editor(props) {
     }
 
     return (
-        <div className="editor-root-container">
+        <div className="fonts-root-container">
             <h3 className="noto-black">Editor Test</h3>
             <Button aria-controls="dropdown-menu" aria-haspopup="true" onClick={handleClick}>
                 기본 폰트
