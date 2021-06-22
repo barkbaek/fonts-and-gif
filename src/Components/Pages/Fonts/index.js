@@ -90,23 +90,23 @@ function Editor(props) {
 
     }, [])
 
-    const [anchorEl, setAnchorEl] = useState(null);
+    const [fontNameAnchorEl, setFontNameAnchorEl] = useState(null);
 
-    const handleClick = (event) => {
-        setAnchorEl(event.currentTarget)
+    const fontNameHandleClick = (event) => {
+        setFontNameAnchorEl(event.currentTarget)
     }
 
-    const handleClose = () => {
-        setAnchorEl(null)
+    const fontNameHandleClose = () => {
+        setFontNameAnchorEl(null)
     }
 
-    const onClickMenuItem = (font) => {
+    const onClickFontName = (font) => {
         textInput.current.setInputStyle("fontFamily", font)
         setFontName(font)
-        handleClose()
+        fontNameHandleClose()
     }
 
-    const onChangeFontStroke = (e) => {
+    const onChangeFontStrokeSize = (e) => {
         console.log(e.target.value)
         setStrokeSize(e.target.value)
         textInput.current.setInputStyle("strokeThickness", strokeSize)
@@ -114,34 +114,35 @@ function Editor(props) {
 
     return (
         <div className="fonts-root-container">
-            <h3 className="noto-black">Editor Test</h3>
+            <h3 className="noto-black">Font Test</h3>
             <h5>폰트 이름</h5>
-            <Button aria-controls="font-name-dropdown-menu" aria-haspopup="true" onClick={handleClick}>
+            <Button aria-controls="font-name-dropdown-menu" aria-haspopup="true" onClick={fontNameHandleClick}>
                 {fontName}
             </Button>
             <Menu
                 style={{ marginTop: '40px' }}
                 id="font-name-dropdown-menu"
-                anchorEl={anchorEl}
+                anchorEl={fontNameAnchorEl}
                 keepMounted
-                open={Boolean(anchorEl)}
-                onClose={handleClose}
+                open={Boolean(fontNameAnchorEl)}
+                onClose={fontNameHandleClose}
             >
-                <MenuItem className={FontNotoBlack} onClick={() => onClickMenuItem(FontNotoBlack)}>NotoSansCJKkr-Black</MenuItem>
-                <MenuItem className={FontNotoBold} onClick={() => onClickMenuItem(FontNotoBold)}>NotoSansCJKkr-Bold</MenuItem>
-                <MenuItem className={FontNotoDemiLight} onClick={() => onClickMenuItem(FontNotoDemiLight)}>NotoSansCJKkr-DemiLight</MenuItem>
-                <MenuItem className={FontNotoLight} onClick={() => onClickMenuItem(FontNotoLight)}>NotoSansCJKkr-Light</MenuItem>
-                <MenuItem className={FontNotoMedium} onClick={() => onClickMenuItem(FontNotoMedium)}>NotoSansCJKkr-Medium</MenuItem>
-                <MenuItem className={FontNotoRegular} onClick={() => onClickMenuItem(FontNotoRegular)}>NotoSansCJKkr-Regular</MenuItem>
-                <MenuItem className={FontNotoThin} onClick={() => onClickMenuItem(FontNotoThin)}>NotoSansCJKkr-Thin</MenuItem>
+                <MenuItem className={FontNotoBlack} onClick={() => onClickFontName(FontNotoBlack)}>NotoSansCJKkr-Black</MenuItem>
+                <MenuItem className={FontNotoBold} onClick={() => onClickFontName(FontNotoBold)}>NotoSansCJKkr-Bold</MenuItem>
+                <MenuItem className={FontNotoDemiLight} onClick={() => onClickFontName(FontNotoDemiLight)}>NotoSansCJKkr-DemiLight</MenuItem>
+                <MenuItem className={FontNotoLight} onClick={() => onClickFontName(FontNotoLight)}>NotoSansCJKkr-Light</MenuItem>
+                <MenuItem className={FontNotoMedium} onClick={() => onClickFontName(FontNotoMedium)}>NotoSansCJKkr-Medium</MenuItem>
+                <MenuItem className={FontNotoRegular} onClick={() => onClickFontName(FontNotoRegular)}>NotoSansCJKkr-Regular</MenuItem>
+                <MenuItem className={FontNotoThin} onClick={() => onClickFontName(FontNotoThin)}>NotoSansCJKkr-Thin</MenuItem>
             </Menu>
             <div>
                 <h5>폰트 스트로크 크기</h5>
-                <Input type="number" value={strokeSize} onChange={onChangeFontStroke}/>
+                <Input type="number" value={strokeSize} onChange={onChangeFontStrokeSize}/>
             </div>
             <div>
                 <h5>폰트 스트로크 컬러</h5>
             </div>
+
             <div className="pixi-container" ref={pixiContainer}></div>
         </div>
     )
