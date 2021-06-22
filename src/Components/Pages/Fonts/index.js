@@ -20,6 +20,7 @@ const styleTag = document.createElement('style')
 
 function Editor(props) {
     const [fontName, setFontName] = useState("기본 폰트")
+    const [fontStrokeColor, setFontStrokeColor] = useState('red')
     const [strokeSize, setStrokeSize] = useState(0)
 
     const textInput = useRef()
@@ -85,7 +86,7 @@ function Editor(props) {
             // }
         })
         textInput.current.setInputStyle("strokeThickness", strokeSize)
-        textInput.current.setInputStyle("stroke", "#25556f")
+        textInput.current.setInputStyle("stroke", fontStrokeColor)
         app.stage.addChild(textInput.current)
 
     }, [])
@@ -110,6 +111,22 @@ function Editor(props) {
         console.log(e.target.value)
         setStrokeSize(e.target.value)
         textInput.current.setInputStyle("strokeThickness", strokeSize)
+    }
+
+    const [fontStrokeColorAnchorEl, setFontStrokeColorAnchorEl] = useState(null);
+
+    const fontStrokeColorHandleClick = (event) => {
+        setFontStrokeColorAnchorEl(event.currentTarget)
+    }
+
+    const fontStrokeColorHandleClose = () => {
+        setFontStrokeColorAnchorEl(null)
+    }
+
+    const onClickFontStrokeColor = (color) => {
+        textInput.current.setInputStyle("stroke", color)
+        setFontStrokeColor(color)
+        fontStrokeColorHandleClose()
     }
 
     return (
@@ -142,7 +159,21 @@ function Editor(props) {
             <div>
                 <h5>폰트 스트로크 컬러</h5>
             </div>
-
+            <Button aria-controls="font-stroke-color-dropdown-menu" aria-haspopup="true" onClick={fontStrokeColorHandleClick}>
+                {fontStrokeColor}
+            </Button>
+            <Menu
+                style={{ marginTop: '40px' }}
+                id="font-stroke-color-dropdown-menu"
+                anchorEl={fontStrokeColorAnchorEl}
+                keepMounted
+                open={Boolean(fontStrokeColorAnchorEl)}
+                onClose={fontStrokeColorHandleClose}
+            >
+                <MenuItem onClick={() => onClickFontStrokeColor('red')}>red</MenuItem>
+                <MenuItem onClick={() => onClickFontStrokeColor('green')}>green</MenuItem>
+                <MenuItem onClick={() => onClickFontStrokeColor('blue')}>blue</MenuItem>
+            </Menu>
             <div className="pixi-container" ref={pixiContainer}></div>
         </div>
     )
