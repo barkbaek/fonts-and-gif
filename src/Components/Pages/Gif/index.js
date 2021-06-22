@@ -2,6 +2,8 @@ import { useHistory } from 'react-router-dom'
 import './index.scss'
 import {useEffect, useRef, useState} from "react";
 import * as PIXI from 'pixi.js'
+import img1 from './test1.png'
+import img2 from './test2.png'
 
 function Gif(props) {
     const pixiContainer = useRef()
@@ -18,7 +20,30 @@ function Gif(props) {
 
         pixiContainer.current.appendChild(app.view)
 
-        // app.stage.addChild(textInput)
+        let images = [img1, img2];
+        let textureArray = [];
+
+        for (let i=0; i < images.length; i++)
+        {
+            let texture = PIXI.Texture.fromImage(images[i]);
+            textureArray.push(texture);
+        }
+
+        console.dir(textureArray)
+        let animatedSprite = new PIXI.extras.AnimatedSprite(textureArray);
+
+        animatedSprite.onLoop = function() {
+            console.log("LOOPING");
+            //animatedSprite.stop();
+        };
+
+        animatedSprite.loop = true;
+        animatedSprite.animationSpeed = .1;
+
+
+        animatedSprite.play();
+
+        app.stage.addChild(animatedSprite)
 
     }, [])
 
