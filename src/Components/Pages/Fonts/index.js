@@ -6,7 +6,7 @@ import TextInput from '../../../Modules/Helper/PixiTextInput'
 // import Button from '@material-ui/core/Button'
 // import Menu from '@material-ui/core/Menu'
 // import MenuItem from '@material-ui/core/MenuItem'
-import { Button, Menu, MenuItem } from '@material-ui/core'
+import { Input, Button, Menu, MenuItem } from '@material-ui/core'
 
 const FontNotoBlack = "NotoSansCJKkr-Black"
 const FontNotoBold = "NotoSansCJKkr-Bold"
@@ -19,7 +19,12 @@ const FontNotoThin = "NotoSansCJKkr-Thin"
 const styleTag = document.createElement('style')
 
 function Editor(props) {
+    const [fontName, setFontName] = useState("기본 폰트")
+    const [strokeSize, setStrokeSize] = useState(0)
+
+    const textInput = useRef()
     const pixiContainer = useRef()
+
     styleTag.innerHTML = `
         @font-face {
             font-family: ${FontNotoBlack};
@@ -51,7 +56,7 @@ function Editor(props) {
         }
     `
     document.head.appendChild(styleTag)
-    const textInput = useRef()
+
 
     useEffect(() => {
         const app = new PIXI.Application({
@@ -79,8 +84,8 @@ function Editor(props) {
             //     disabled: {fill: 0xDBDBDB, rounded: 16}
             // }
         })
+        textInput.current.setInputStyle("strokeThickness", strokeSize)
         textInput.current.setInputStyle("stroke", "#25556f")
-        textInput.current.setInputStyle("strokeThickness", 10)
         app.stage.addChild(textInput.current)
 
     }, [])
@@ -97,18 +102,26 @@ function Editor(props) {
 
     const onClickMenuItem = (font) => {
         textInput.current.setInputStyle("fontFamily", font)
+        setFontName(font)
         handleClose()
+    }
+
+    const onChangeFontStroke = (e) => {
+        console.log(e.target.value)
+        setStrokeSize(e.target.value)
+        textInput.current.setInputStyle("strokeThickness", strokeSize)
     }
 
     return (
         <div className="fonts-root-container">
             <h3 className="noto-black">Editor Test</h3>
-            <Button aria-controls="dropdown-menu" aria-haspopup="true" onClick={handleClick}>
-                기본 폰트
+            <h5>폰트 이름</h5>
+            <Button aria-controls="font-name-dropdown-menu" aria-haspopup="true" onClick={handleClick}>
+                {fontName}
             </Button>
             <Menu
                 style={{ marginTop: '40px' }}
-                id="dropdown-menu"
+                id="font-name-dropdown-menu"
                 anchorEl={anchorEl}
                 keepMounted
                 open={Boolean(anchorEl)}
@@ -122,6 +135,13 @@ function Editor(props) {
                 <MenuItem className={FontNotoRegular} onClick={() => onClickMenuItem(FontNotoRegular)}>NotoSansCJKkr-Regular</MenuItem>
                 <MenuItem className={FontNotoThin} onClick={() => onClickMenuItem(FontNotoThin)}>NotoSansCJKkr-Thin</MenuItem>
             </Menu>
+            <div>
+                <h5>폰트 스트로크 크기</h5>
+                <Input type="number" value={strokeSize} onChange={onChangeFontStroke}/>
+            </div>
+            <div>
+                <h5>폰트 스트로크 컬러</h5>
+            </div>
             <div className="pixi-container" ref={pixiContainer}></div>
         </div>
     )
