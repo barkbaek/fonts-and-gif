@@ -9,6 +9,26 @@ import {Button} from "@material-ui/core";
 const URL = 'https://www.animatedimages.org/data/media/298/animated-eat-and-drink-image-0400.gif'
 let app
 
+function onDragStart (e) {
+    this.data = e.data
+    this.alpha = 0.5
+    this.dragging = true
+}
+
+function onDragEnd () {
+    this.alpha = 1
+    this.dragging = false
+    this.data = null
+}
+
+function onDragMove () {
+    if (this.dragging) {
+        let newPosition = this.data.getLocalPosition(this.parent)
+        this.position.x = newPosition.x
+        this.position.y = newPosition.y
+    }
+}
+
 const gifToPixi = URL => {
     gifFrames({ url: URL, frames: 'all', outputType: 'canvas' })
         .then(function (frameData) {
@@ -42,6 +62,17 @@ const gifToPixi = URL => {
             animatedSprite.animationSpeed = .1;
 
             animatedSprite.play();
+            animatedSprite.interactive = true
+            animatedSprite.buttonMode = true
+            animatedSprite
+                .on('mousedown', onDragStart)
+                .on('touchstart', onDragStart)
+                .on('mouseup', onDragEnd)
+                .on('mouseupoutside', onDragEnd)
+                .on('touchend', onDragEnd)
+                .on('touchendoutside', onDragEnd)
+                .on('mousemove', onDragMove)
+                .on('touchmove', onDragMove)
 
             app.stage.addChild(animatedSprite)
 
@@ -63,6 +94,21 @@ function Gif(props) {
         })
 
         pixiContainer.current.appendChild(app.view)
+
+        // const toDataURL = url => fetch(url)
+        //     .then(response => response.blob())
+        //     .then(blob => new Promise((resolve, reject) => {
+        //         const reader = new FileReader()
+        //         reader.onloadend = () => resolve(reader.result)
+        //         reader.onerror = reject
+        //         reader.readAsDataURL(blob)
+        //     }))
+        //
+        //
+        // toDataURL(URL)
+        //     .then(dataUrl => {
+        //         console.log('RESULT:', dataUrl)
+        //     })
 
         gifToPixi('/images/animation.gif')
 

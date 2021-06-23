@@ -164,5 +164,6 @@
     "presets": [
       "react-app"
     ]
-  }
+  },
+  "proxy": "https://www.animatedimages.org/"
 }
