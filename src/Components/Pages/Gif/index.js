@@ -2,9 +2,11 @@ import { useHistory } from 'react-router-dom'
 import './index.scss'
 import {useEffect, useRef, useState} from "react";
 import * as PIXI from 'pixi.js'
+import gifFrames from '../../../Modules/Helper/GifFrames'
 
 function Gif(props) {
     const pixiContainer = useRef()
+    const testContainer = useRef()
 
     useEffect(() => {
         const app = new PIXI.Application({
@@ -18,28 +20,42 @@ function Gif(props) {
 
         pixiContainer.current.appendChild(app.view)
 
-        let images = ["/images/test1.png", "/images/test2.png"];
-        let textureArray = [];
+        gifFrames({ url: '/images/animation.gif', frames: 'all', outputType: 'canvas' })
+            .then(function (frameData) {
+                let images = [];
 
-        for (let i=0; i < images.length; i++)
-        {
-            let texture = PIXI.Texture.fromImage(images[i]);
-            textureArray.push(texture);
-        }
-        let animatedSprite = new PIXI.extras.AnimatedSprite(textureArray);
+                for (let i = 0; i < frameData.length; i++) {
+                    let canvas = frameData[i].getImage()
+                    let img = canvas.toDataURL("image/png")
+                    images.push(img)
+                    // let imgTag = document.createElement('img')
+                    // imgTag.classList.add('gif-splitted')
+                    // imgTag.setAttribute('src', img)
+                    // testContainer.current.appendChild(imgTag)
+                }
 
-        animatedSprite.onLoop = function() {
-            console.log("LOOPING");
-            //animatedSprite.stop();
-        };
+                let textureArray = [];
 
-        animatedSprite.loop = true;
-        animatedSprite.animationSpeed = .1;
+                for (let i=0; i < images.length; i++)
+                {
+                    let texture = PIXI.Texture.fromImage(images[i]);
+                    textureArray.push(texture);
+                }
+                let animatedSprite = new PIXI.extras.AnimatedSprite(textureArray);
 
+                animatedSprite.onLoop = function() {
+                    console.log("LOOPING");
+                    //animatedSprite.stop();
+                };
 
-        animatedSprite.play();
+                animatedSprite.loop = true;
+                animatedSprite.animationSpeed = .1;
 
-        app.stage.addChild(animatedSprite)
+                animatedSprite.play();
+
+                app.stage.addChild(animatedSprite)
+
+            }).catch(console.error.bind(console));
 
     }, [])
 
@@ -48,6 +64,7 @@ function Gif(props) {
         <div className="gif-root-container">
             <h3>Gif</h3>
             <div className="pixi-container" ref={pixiContainer}></div>
+            <div ref={testContainer}></div>
         </div>
     )
 }
